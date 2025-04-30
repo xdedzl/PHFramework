@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PHFramework.Entity
@@ -84,7 +85,6 @@ namespace PHFramework.Entity
                 m_EntityContainerDic.Remove(key);
             }
         }
-
 
         /// <summary>
         /// 分配实体
@@ -211,6 +211,17 @@ namespace PHFramework.Entity
                 return Recycle(entity);
             }
             return false;
+        }
+
+        /// <summary>
+        /// 回收所有实体
+        /// </summary>
+        public void RecycleAll()
+        {
+            foreach (var item in m_EntityDic.Values.ToList())
+            {
+                Recycle(item);
+            }
         }
 
         /// <summary>
@@ -418,6 +429,28 @@ namespace PHFramework.Entity
             else
             {
                 throw new PHFrameworkException("[EntityContainer] null container");
+            }
+        }
+
+
+        /// <summary>
+        /// 移除一个模板
+        /// </summary>
+        /// <param name="key">key</param>
+        public void RecyleAllTemplate(string key)
+        {
+            var container = GetContainer(key);
+            container.Clean(0);
+            var entitys = container.GetEntities();
+            if (entitys != null)
+            {
+                foreach (var item in entitys)
+                {
+                    m_EntityDic.Remove(item.Id);
+                    m_EntityInfoDic.Remove(item.Id);
+                    GameObject.Destroy(item.gameObject);
+                }
+                m_EntityContainerDic.Remove(key);
             }
         }
 

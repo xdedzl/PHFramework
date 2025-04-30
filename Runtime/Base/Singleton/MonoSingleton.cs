@@ -41,9 +41,9 @@ namespace PHFramework
                     if (_instance == null)
                     {
                         // 先在场景中找寻这个单例
-                        _instance = FindFirstObjectByType<T>();
+                        _instance = FindFirstObjectByType<T>(FindObjectsInactive.Include);
 
-                        if (FindObjectsByType<T>(FindObjectsSortMode.None).Length > 1)
+                        if (FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length > 1)
                         {
                             if (Debug.isDebugBuild)
                             {

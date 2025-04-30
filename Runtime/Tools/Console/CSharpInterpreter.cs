@@ -146,6 +146,7 @@ namespace PHFramework.Console
 
         public object ExcuteCode(string code, string className, string method)
         {
+#if AAAA
             CSharpCodeProvider codeProvider = new CSharpCodeProvider();
             CompilerParameters compilerParameters = new CompilerParameters();
             Assembly[] assemblys = AppDomain.CurrentDomain.GetAssemblies();
@@ -171,7 +172,7 @@ namespace PHFramework.Console
                 object dyClass = objAssembly.CreateInstance(className);
 
                 var methodInfo = dyClass.GetType().GetMethod(method);
-                
+
 
                 if (methodInfo.ReturnType != typeof(void))
                 {
@@ -186,6 +187,8 @@ namespace PHFramework.Console
                     return null;
                 }
             }
+#endif
+            return null;
         }
 
         #endregion
